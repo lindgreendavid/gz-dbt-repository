@@ -25,7 +25,7 @@ select
     s.revenue,
     p.purchase_price,
     (s.quantity * p.purchase_price) as purchase_cost,
-    s.revenue - (s.quantity * p.purchase_price) as margin
+    s.revenue - (s.quantity * s.purchase_price) as margin
 from sales_data s
 join product_data p
 on s.pdt_id = p.pdt_id
