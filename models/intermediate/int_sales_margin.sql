@@ -3,6 +3,7 @@
 with sales_data as (
     select
         orders_id,
+        date_date,
         pdt_id,
         quantity,
         revenue
@@ -19,6 +20,7 @@ product_data as (
 select
     s.orders_id,
     s.pdt_id,
+    s.date_date,
     s.quantity,
     s.revenue,
     p.purchase_price,
