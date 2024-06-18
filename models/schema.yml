@@ -1,0 +1,54 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    description: This dataset contains raw data sourced from Greenweez's transactional systems.
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        description: Raw sales data from Greenweez.
+        columns:
+          - name: date_date
+            description: The date of purchase.
+          - name: orders_id
+            description: The unique identifier for each order.
+            tests:
+              - not_null
+          - name: pdt_id
+            description: The unique identifier for each product in an order.
+            tests:
+              - not_null
+          - name: revenue
+            description: The revenue generated from the sale.
+          - name: quantity
+            description: The number of units of the product ordered.
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns: ['orders_id', 'pdt_id']
+      - name: product
+        identifier: raw_gz_product
+        description: Raw product data from Greenweez.
+        columns:
+          - name: products_id
+            description: The unique identifier for each product.
+            tests:
+              - unique
+              - not_null
+          - name: purchse_price
+            description: The purchase price of the product.
+      - name: ship
+        identifier: raw_gz_ship
+        description: Raw shipping data from Greenweez.
+        columns:
+          - name: orders_id
+            description: The unique identifier for each order.
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: The fee charged for shipping the order.
+          - name: logcost
+            description: The logistics cost associated with the order.
+          - name: ship_cost
+            description: The shipping cost for the order.
